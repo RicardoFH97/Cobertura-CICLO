@@ -28,7 +28,7 @@
   main.wrap { padding-top: 20px; padding-bottom: 40px; display: flex; flex-direction: column; gap: 18px; }
   .take { background: var(--ua-gris); color: var(--blanco); border-radius: var(--radio); padding: 14px 18px; font-size: 14.5px; }
   .take b { color: var(--blanco); font-weight: 700; }
-  .take .hl { color: #FFB3AC; }
+  .take .hl { color: #9FE0B6; }
   .filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
   .filters label { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--texto-suave); }
   select, input[type=search] { font: inherit; font-size: 13.5px; color: var(--texto); background: var(--blanco); border: 1px solid #CFCBC8; border-radius: var(--radio); padding: 8px 10px; min-width: 210px; }
@@ -336,12 +336,18 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
     $('k-unq').textContent = u ? `${fi(u[0])} estudiantes únicos; ${fi(u[1])} ${u[1] === 1 ? 'cursa' : 'cursan'} dos o más` : '';
     $('k-baja').textContent = fi(rs.filter((r) => pct(r.respondentes, r.inscritos) < BAJA).length); $('k-tot').textContent = fi(rs.length);
     const key = st.carrera ? 'asignatura' : st.facultad ? 'carrera' : 'facultad';
-    const peor = agrup(rs, key).filter((d) => Number.isFinite(d.v))[0];
+    const mejor = agrup(rs, key).filter((d) => Number.isFinite(d.v)).slice(-1)[0];
     const nombre = { facultad: 'la facultad', carrera: 'la carrera', asignatura: 'la asignatura' }[key];
+    const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const cc = DATA.corte.corte; const fecha = `${+cc.slice(8, 10)}-${MES[+cc.slice(5, 7) - 1]}-${cc.slice(0, 4)}`;
+    let ambito = 'corporativa';
+    if (st.carrera) ambito = `de la carrera ${st.carrera}`;
+    else if (st.facultad) ambito = `de la facultad ${st.facultad}`;
+    if (st.campus) ambito = (ambito === 'corporativa' ? 'del campus ' : ambito + ' en el campus ') + st.campus;
     const take = $('take'); take.replaceChildren();
     const add = (t, b, c) => { const e = document.createElement(b ? 'b' : 'span'); if (c) e.className = c; e.textContent = t; take.appendChild(e); };
-    add('Cobertura de la selección: '); add(fp(pct(s.r, s.i)), true); add(` (${fi(s.r)} respuestas válidas de ${fi(s.i)} inscripciones). `);
-    if (peor) { add(`Menor cobertura en ${nombre} `); add(peor.k, true); add(' con '); add(fp(peor.v), true, 'hl'); add('. '); }
+    add(`Cobertura ${ambito} al ${fecha}: `); add(fp(pct(s.r, s.i)), true); add(` (${fi(s.r)} respuestas válidas de ${fi(s.i)} inscripciones). `);
+    if (mejor) { add(`Mayor cobertura en ${nombre} `); add(mejor.k, true); add(' con '); add(fp(mejor.v), true, 'hl'); add('. '); }
     add('Quedan '); add(fi(s.i - s.r), true); add(' inscripciones sin respuesta.');
     $('h-grupo').textContent = st.facultad ? 'Cobertura por carrera' : 'Cobertura por facultad';
     bars($('ch-campus'), agrup(rs, 'campus'), (k) => { st.campus = st.campus === k ? '' : k; render(); });
