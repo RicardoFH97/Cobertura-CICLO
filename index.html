@@ -16,6 +16,7 @@
     --radio: 6px;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   body { margin: 0; background: var(--fondo); color: var(--texto); font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; line-height: 1.45; }
   .top { background: var(--blanco); border-bottom: 4px solid var(--ua-rojo); }
   .top .wrap { display: flex; align-items: center; gap: 24px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
@@ -82,14 +83,47 @@
   details li { margin: 6px 0; }
   footer { border-top: 1px solid var(--linea); margin-top: 6px; padding-top: 14px; font-size: 12px; color: var(--texto-suave); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   footer b { color: var(--ua-rojo); }
-  .views { display: flex; gap: 6px; border-bottom: 2px solid var(--linea); }
-  .views button, .subtabs button { all: unset; cursor: pointer; font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; }
-  .views button { font-size: 19px; padding: 10px 18px; color: var(--texto-suave); border-bottom: 4px solid transparent; margin-bottom: -2px; }
-  .views button[aria-selected=true] { color: var(--ua-gris); border-bottom-color: var(--ua-rojo); }
-  .subtabs { display: inline-flex; background: var(--blanco); border-radius: 999px; padding: 4px; gap: 4px; border: 1px solid var(--linea); flex-wrap: wrap; }
-  .subtabs button { font-size: 15px; padding: 8px 18px; border-radius: 999px; color: var(--texto-suave); }
-  .subtabs button[aria-selected=true] { background: var(--ua-gris); color: var(--blanco); }
-  .rhead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .stick { display: flex; flex-direction: column; gap: 12px; }
+  @media (min-width: 701px) { .stick { position: sticky; top: 0; z-index: 20; background: var(--fondo); padding: 10px 0 12px; margin-top: -10px; border-bottom: 1px solid var(--linea); } }
+  .views { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .views button { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 12px; align-items: center; background: var(--blanco); border: 1px solid var(--linea); border-radius: 10px; padding: 12px 16px; transition: border-color .15s; }
+  .views button:hover { border-color: #BDB8B5; }
+  .views button[aria-selected=true] { border: 2px solid var(--ua-rojo); padding: 11px 15px; }
+  .views svg { width: 30px; height: 30px; flex: none; stroke: var(--texto-suave); }
+  .views button[aria-selected=true] svg { stroke: var(--ua-rojo); }
+  .views .vt { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: .3px; color: var(--ua-gris); line-height: 1.1; }
+  .views .vs { display: block; font-size: 12.5px; color: var(--texto-suave); margin-top: 2px; }
+  .nuevo { font-family: 'Montserrat', Arial, sans-serif; font-size: 10.5px; font-weight: 700; background: var(--ua-rojo); color: #fff; border-radius: 999px; padding: 2px 8px; margin-left: 8px; vertical-align: 3px; letter-spacing: .5px; }
+  .fpanel { background: var(--blanco); border: 1px solid var(--linea); border-left: 4px solid var(--ua-gris); border-radius: 0; padding: 12px 16px; }
+  .fpanel .ft { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ua-gris); margin-bottom: 8px; }
+  .fpanel .ft svg { width: 18px; height: 18px; stroke: var(--ua-rojo); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; font-size: 12.5px; color: var(--texto-suave); }
+  .chip { all: unset; cursor: pointer; background: var(--ua-gris); color: #fff; border-radius: 999px; padding: 4px 10px; font-size: 12.5px; font-weight: 500; }
+  .chip:hover { background: #000; }
+  .chips .cn { font-weight: 600; color: var(--texto); }
+  .subtabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--linea); }
+  .subtabs button { all: unset; cursor: pointer; padding: 12px 8px 10px; border-bottom: 4px solid transparent; margin-bottom: -2px; display: flex; gap: 10px; align-items: flex-start; }
+  .subtabs .num { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #E4E2E0; color: var(--ua-gris); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+  .subtabs .st { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 700; font-size: 18px; text-transform: uppercase; color: var(--texto-suave); line-height: 1.15; }
+  .subtabs .sd { display: block; font-family: 'Montserrat', Arial, sans-serif; text-transform: none; font-weight: 400; font-size: 12px; color: var(--texto-suave); }
+  .subtabs button[aria-selected=true] { border-bottom-color: var(--ua-rojo); }
+  .subtabs button[aria-selected=true] .num { background: var(--ua-rojo); color: #fff; }
+  .subtabs button[aria-selected=true] .st { color: var(--ua-gris); }
+  .rtiles .tile { background: #ECEAE8; border-top: none; padding: 14px 16px; }
+  .rtiles .tile.main { background: #ECEAE8; border-left: 4px solid var(--ua-rojo); border-radius: 0; }
+  .rtiles .tile .val { font-size: 34px; }
+  .rtiles .tile .val.sm { font-size: 21px; }
+  .fpanel .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.7fr) auto; gap: 10px; align-items: end; }
+  .fpanel select { min-width: 0; width: 100%; }
+  .fpanel label { min-width: 0; }
+  .views button { min-width: 0; }
+  @media (max-width: 700px) {
+    .fpanel .filters { grid-template-columns: 1fr; }
+    .views { gap: 8px; } .views button { padding: 10px; gap: 8px; } .views button[aria-selected=true] { padding: 9px; }
+    .views svg { width: 22px; height: 22px; } .views .vt { font-size: 16px; } .nuevo { display: none; }
+  }
+  @media (max-width: 700px) { .views .vs, .subtabs .sd { display: none; } .views .vt { font-size: 18px; } .subtabs .st { font-size: 15px; } }
+  .rhead { display: flex; flex-direction: column; gap: 6px; }
   .rhead .n { font-size: 13px; color: var(--texto-suave); }
   .rtiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
   .rtiles .tile .val.sm { font-size: 24px; line-height: 1.15; }
@@ -127,12 +161,14 @@
 </header>
 
 <main class="wrap">
+  <div class="stick">
   <nav class="views" role="tablist" aria-label="Secciones">
-    <button type="button" role="tab" data-view="cob" aria-selected="true">Cobertura</button>
-    <button type="button" role="tab" data-view="res" aria-selected="false">Resultados</button>
+    <button type="button" role="tab" data-view="cob" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg><span><span class="vt">Cobertura</span><span class="vs">¿Cuántos estudiantes respondieron?</span></span></button>
+    <button type="button" role="tab" data-view="res" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 16v-4"/><path d="M11 16v-8"/><path d="M15 16v-6"/><path d="M19 16V6"/></svg><span><span class="vt">Resultados<span class="nuevo" id="nuevo" hidden>NUEVO</span></span><span class="vs">¿Qué opinan los estudiantes?</span></span></button>
   </nav>
-  <div class="take" id="take">—</div>
 
+  <div class="fpanel">
+    <div class="ft"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16l-6 8v6l-4 2v-8z"/></svg><span>Filtra para ver tu campus, facultad, carrera o asignatura</span></div>
   <div class="filters">
     <label>Campus <select id="f-campus"></select></label>
     <label>Facultad <select id="f-facultad"></select></label>
@@ -140,7 +176,11 @@
     <label id="lbl-asig" hidden>Asignatura <select id="f-asig"></select></label>
     <button class="btn" id="reset" type="button">Quitar filtros</button>
   </div>
+    <div class="chips" id="chips"></div>
+  </div>
+  </div>
 
+  <div class="take" id="take">—</div>
   <div id="v-cob">
   <section class="tiles">
     <div class="tile main"><div class="lbl">Cobertura</div><div class="val" id="k-cob">—</div><div class="note">respuestas válidas ÷ inscripciones</div></div>
@@ -189,8 +229,8 @@
   <div id="v-res" hidden>
     <div class="rhead">
       <div class="subtabs" role="tablist" aria-label="Resultados">
-        <button type="button" role="tab" data-sub="1" aria-selected="true">El estudiante y su proceso formativo</button>
-        <button type="button" role="tab" data-sub="2" aria-selected="false">La evaluación de ciclo</button>
+        <button type="button" role="tab" data-sub="1" aria-selected="true"><span class="num">1</span><span class="st">El estudiante y su proceso formativo<span class="sd">7 afirmaciones de autopercepción</span></span></button>
+        <button type="button" role="tab" data-sub="2" aria-selected="false"><span class="num">2</span><span class="st">La evaluación de ciclo<span class="sd">Conocimiento y valoración de la evaluación</span></span></button>
       </div>
       <span class="n" id="r-n">—</span>
     </div>
@@ -473,6 +513,19 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
     });
   }
 
+  function drawChips(total, unidad) {
+    const box = $('chips'); box.replaceChildren();
+    const act = [['campus', st.campus], ['facultad', st.facultad], ['carrera', st.carrera]];
+    if (st.view === 'res' && st.asig) act.push(['asig', ($('f-asig').selectedOptions[0] || {}).textContent || st.asig]);
+    const lbl = document.createElement('span'); lbl.textContent = act.some((a) => a[1]) ? 'Viendo:' : 'Viendo: todo el corporativo'; box.appendChild(lbl);
+    act.filter((a) => a[1]).forEach(([k, v]) => {
+      const c = document.createElement('button'); c.type = 'button'; c.className = 'chip'; c.textContent = v + '  ×'; c.title = 'Quitar filtro';
+      c.onclick = () => { if (k === 'facultad') { st.facultad = ''; st.carrera = ''; st.asig = ''; } else if (k === 'carrera') { st.carrera = ''; st.asig = ''; } else st[k] = ''; render(); };
+      box.appendChild(c);
+    });
+    const n = document.createElement('span'); n.append('· '); const b = document.createElement('span'); b.className = 'cn'; b.textContent = fi(total); n.append(b, ' ' + unidad); box.appendChild(n);
+  }
+
   // ---------- render ----------
   function render() {
     fillSelect('f-campus', 'campus', { noCampus: true }, 'Todos los campus');
@@ -481,8 +534,9 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
     fillAsig();
     document.querySelectorAll('.views button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.view === st.view)));
     $('v-cob').hidden = st.view !== 'cob'; $('v-res').hidden = st.view !== 'res'; $('take').hidden = st.view !== 'cob'; $('lbl-asig').hidden = st.view !== 'res';
-    if (st.view === 'res') { renderRes(); return; }
+    if (st.view === 'res') { renderRes(); const k = rkey(); drawChips((RS[k] || { n: 0 }).n, 'respuestas válidas'); return; }
     const rs = filt(); const s = sum(rs);
+    drawChips(s.i, 'inscripciones');
     $('k-cob').textContent = fp(pct(s.r, s.i)); $('k-resp').textContent = fi(s.r); $('k-ins').textContent = fi(s.i);
     $('k-falt').textContent = fi(s.i - s.r);
     const u = DATA.unicos[`${st.campus}|${st.facultad}|${st.carrera}`];
@@ -509,6 +563,7 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
   }
 
   const c = DATA.corte;
+  $('nuevo').hidden = !(c.corte <= '2026-11-24 23:59');
   $('corte').textContent = c.corte; $('corte2').textContent = c.corte;
   $('m-fuera').textContent = fi(c.fuera_universo); $('m-resc').textContent = fi(c.rescatadas || 0); $('m-dos').textContent = fi(c.dos || 0); $('m-int').textContent = fi(c.intercambio); $('m-arch').textContent = fi(c.respuestas_archivo);
   let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 150); });
