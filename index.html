@@ -111,6 +111,14 @@
   .subtabs button[aria-selected=true] .st { color: var(--ua-gris); }
   .rtiles .tile { background: #ECEAE8; border-top: none; padding: 14px 16px; }
   .rtiles .tile.main { background: #ECEAE8; border-left: 4px solid var(--ua-rojo); border-radius: 0; }
+  .rtiles .mbar { position: relative; height: 10px; background: #D9D6D3; border-radius: 5px; margin: 8px 0 8px; }
+  .rtiles .mbar i { display: block; height: 100%; border-radius: 5px; background: var(--ua-gris); }
+  .rtiles .tile.main .mbar i { background: var(--ua-rojo); }
+  .rtiles .mbar .mk { position: absolute; top: -4px; bottom: -4px; width: 3px; background: #000; border-radius: 1px; }
+  .rtiles .note { font-size: 12.5px; line-height: 1.45; color: var(--texto); }
+  .rtiles .note b { font-weight: 700; }
+  .rtiles .ref2 { color: var(--texto-suave); margin-top: 4px; font-size: 12px; }
+  .info { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--texto-suave); color: var(--texto-suave); font-size: 10px; font-weight: 700; align-items: center; justify-content: center; cursor: help; margin-left: 4px; font-style: italic; font-family: Georgia, serif; text-transform: none; vertical-align: 1px; }
   .rtiles .tile .val { font-size: 34px; }
   .rtiles .tile .val.sm { font-size: 21px; }
   .fpanel .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.7fr) auto; gap: 10px; align-items: end; }
@@ -237,9 +245,27 @@
     <div id="r-insuf" class="insuf" hidden></div>
     <div id="r-sub1">
       <section class="rtiles">
-        <div class="tile main"><div class="lbl">Índice de autopercepción</div><div class="val" id="r-idx">—</div><div class="note" id="r-idx-ref">promedio de acuerdo en 7 afirmaciones</div></div>
-        <div class="tile"><div class="lbl">Mayor fortaleza</div><div class="val sm" id="r-max">—</div><div class="note" id="r-max-v">—</div></div>
-        <div class="tile"><div class="lbl">Foco de atención</div><div class="val sm" id="r-min">—</div><div class="note" id="r-min-v">—</div></div>
+        <div class="tile main">
+          <div class="lbl">Autopercepción positiva del estudiante <span class="info" tabindex="0" title="Promedio del porcentaje de estudiantes que responde «De acuerdo» o «Muy de acuerdo» en las 7 afirmaciones sobre sí mismos.">i</span></div>
+          <div class="val" id="r-idx">—</div>
+          <div class="mbar"><i id="r-idx-bar"></i><span class="mk" id="r-idx-mk" hidden></span></div>
+          <div class="note" id="r-idx-txt">—</div>
+          <div class="note ref2" id="r-idx-ref"></div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Mayor fortaleza <span class="info" tabindex="0" title="Afirmación con el mayor porcentaje de acuerdo en la selección.">i</span></div>
+          <div class="val sm" id="r-max">—</div>
+          <div class="mbar"><i id="r-max-bar"></i><span class="mk" id="r-max-mk" hidden></span></div>
+          <div class="note" id="r-max-v">—</div>
+          <div class="note ref2" id="r-max-ref"></div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Foco de atención <span class="info" tabindex="0" title="Afirmación con el menor porcentaje de acuerdo en la selección.">i</span></div>
+          <div class="val sm" id="r-min">—</div>
+          <div class="mbar"><i id="r-min-bar"></i><span class="mk" id="r-min-mk" hidden></span></div>
+          <div class="note" id="r-min-v">—</div>
+          <div class="note ref2" id="r-min-ref"></div>
+        </div>
       </section>
       <section class="card" style="margin-top:14px">
         <h2>Percepción del estudiante sobre sí mismo</h2>
@@ -493,12 +519,24 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
       return rows;
     };
     const q5 = likRows($('r-q5'), RM.t1 || [], true);
+    const de100 = (v) => Math.round(v * 100);
+    const setTile = (id, p, ref) => {
+      $(id + '-bar').style.width = (p * 100) + '%';
+      const mk = $(id + '-mk'); mk.hidden = isCorp || !Number.isFinite(ref); if (!mk.hidden) mk.style.left = `calc(${ref * 100}% - 1px)`;
+      const r = $(id + '-ref'); r.replaceChildren();
+      if (!isCorp && Number.isFinite(ref)) { const d = (p - ref) * 100; const a = document.createElement('span'); a.className = d >= 0.05 ? 'up' : d <= -0.05 ? 'dn' : ''; a.textContent = `${d >= 0 ? '+' : ''}${d.toFixed(1).replace('.', ',')} pp`; r.append(`Corporativo ${fp(ref)} (marca negra) · `, a); }
+    };
+    const txt = (el, parts) => { el.replaceChildren(); parts.forEach((x) => { if (Array.isArray(x)) { const b = document.createElement('b'); b.textContent = x[0]; el.appendChild(b); } else el.append(x); }); };
     if (q5.length) {
       const idx = q5.reduce((a, r) => a + r.p, 0) / q5.length;
       const cidx = (RM.t1 || []).map(([id]) => agree(C[id])).filter(Number.isFinite); const cref = cidx.reduce((a, b) => a + b, 0) / (cidx.length || 1);
-      $('r-idx').textContent = fp(idx); $('r-idx-ref').textContent = isCorp ? 'promedio de acuerdo en 7 afirmaciones' : `promedio de acuerdo · corporativo ${fp(cref)}`;
-      $('r-max').textContent = q5[0].name; $('r-max-v').textContent = `${fp(q5[0].p)} de acuerdo`;
-      const lo = q5[q5.length - 1]; $('r-min').textContent = lo.name; $('r-min-v').textContent = `${fp(lo.p)} de acuerdo · ${fp(lo.v[3] / lo.v[0])} neutral`;
+      $('r-idx').textContent = fp(idx); setTile('r-idx', idx, cref);
+      txt($('r-idx-txt'), ['En promedio, ', [`${de100(idx)} de cada 100`], ' estudiantes se declaran de acuerdo con afirmaciones positivas sobre su proceso formativo: capacidad de aprender, motivación, perseverancia, hábitos de estudio y otras.']);
+      const hi = q5[0], lo = q5[q5.length - 1];
+      $('r-max').textContent = hi.name; setTile('r-max', hi.p, hi.ref);
+      txt($('r-max-v'), ['La afirmación con más acuerdo: ', [`${de100(hi.p)} de cada 100`], ` estudiantes (${fp(hi.p)}).`]);
+      $('r-min').textContent = lo.name; setTile('r-min', lo.p, lo.ref);
+      txt($('r-min-v'), ['La afirmación con menos acuerdo: ', [`${de100(lo.p)} de cada 100`], ` estudiantes (${fp(lo.p)}); `, [`${de100(lo.v[3] / lo.v[0])} de cada 100`], ' se declara neutral.']);
     }
     likRows($('r-q9'), RM.t2l || [], false);
     const yb = $('r-yes'); yb.replaceChildren();
