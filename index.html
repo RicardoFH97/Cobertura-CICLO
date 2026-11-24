@@ -155,6 +155,64 @@
   .sec-t { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--texto-suave); margin: 4px 0 2px; }
   @media (max-width: 700px) { .lik, .yes { grid-template-columns: 1fr 80px; } .lik .bar5, .yes .track { grid-column: 1 / -1; order: 3; } }
   @media (max-width: 700px) { .hide-n { display: none; } .top h1 { font-size: 24px; } .top img { height: 64px; } select { min-width: 160px; } }
+
+  /* ---- Modo tablero: todo en una pantalla (computador) ---- */
+  @media (min-width: 1100px) and (min-height: 680px) {
+    body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    .wrap { max-width: 1640px; }
+    .top { border-bottom-width: 3px; }
+    .top .wrap { padding-top: 4px; padding-bottom: 4px; gap: 18px; }
+    .top img { height: 54px; }
+    .top h1 { font-size: 24px; } .top .sub { font-size: 11.5px; margin-top: 2px; }
+    main.wrap { flex: 1; min-height: 0; overflow: auto; padding-top: 8px; padding-bottom: 4px; gap: 8px; display: flex; flex-direction: column; }
+    .stick { position: static; padding: 0; margin: 0; border: none; gap: 6px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr); align-items: stretch; }
+    .views { grid-template-columns: 1fr; gap: 6px; }
+    .views button { padding: 4px 12px; gap: 10px; } .views button[aria-selected=true] { padding: 3px 11px; }
+    .views svg { width: 22px; height: 22px; } .views button > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .views .vt { font-size: 17px; } .views .vs { display: inline; margin: 0 0 0 8px; font-size: 11.5px; }
+    .fpanel { padding: 6px 12px; } .fpanel .ft { margin-bottom: 3px; font-size: 12px; } .chips { margin-top: 4px; font-size: 11.5px; } .chip { padding: 2px 9px; font-size: 11.5px; }
+    .filters label { gap: 1px; font-size: 10px; } select { padding: 4px 8px; font-size: 12.5px; } .btn { padding: 5px 12px; font-size: 12px; }
+    .take { padding: 6px 14px; font-size: 13px; }
+    #v-cob:not([hidden]) { flex: 1; min-height: 0; display: grid; gap: 8px;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.7fr); grid-template-rows: auto minmax(0, 0.9fr) minmax(0, 0.7fr) minmax(0, 0.8fr);
+      grid-template-areas: "tiles tiles" "camp tabla" "grupo tabla" "grupo evol"; }
+    #v-cob .tiles { grid-area: tiles; gap: 8px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    #v-cob .grid2 { display: contents; }
+    #c-campus { grid-area: camp; } #c-grupo { grid-area: grupo; } #c-tabla { grid-area: tabla; }
+    #c-evol { grid-area: evol; display: flex; flex-direction: column; } #c-evol .chart { flex: 1; min-height: 0; }
+    #v-cob .card { min-height: 0; overflow: auto; padding: 8px 12px; }
+    #v-cob .card .note { margin: 1px 0 4px; font-size: 11px; }
+    .card h2 { font-size: 16px; }
+    #v-cob .chart { min-height: 0; }
+    #c-tabla { display: flex; flex-direction: column; } #c-tabla .tbox { flex: 1; min-height: 0; max-height: none; }
+    #c-tabla .tbar { margin-bottom: 4px; } #c-tabla input[type=search] { padding: 4px 8px; font-size: 12px; }
+    #c-tabla td { padding: 4px 8px; } #c-tabla th button { padding: 6px 8px; }
+    .tile { padding: 6px 12px; border-top-width: 3px; } .tile .val { font-size: 24px; margin-top: 0; } .tile .note { font-size: 10.5px; line-height: 1.3; } .tile .lbl { font-size: 10px; }
+    #v-res:not([hidden]) { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+    #v-res .rhead { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+    #v-res .subtabs { flex: 1; }
+    #r-sub1:not([hidden]) { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 2fr); gap: 8px; }
+    #r-sub1 .rtiles { grid-template-columns: 1fr; gap: 6px; align-content: start; overflow: auto; min-height: 0; }
+    #r-sub1 .rtiles .tile { padding: 6px 12px; } #r-sub1 .rtiles .tile .val { font-size: 24px; } #r-sub1 .rtiles .tile .val.sm { font-size: 15px; }
+    #r-sub1 .rtiles .mbar { margin: 4px 0; height: 8px; } #r-sub1 .rtiles .note { font-size: 11px; line-height: 1.35; } #r-sub1 .rtiles .ref2 { font-size: 10.5px; margin-top: 2px; }
+    #c-q5 { margin-top: 0 !important; min-height: 0; overflow: auto; padding: 8px 14px; }
+    #r-sub2:not([hidden]) { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: start; }
+    #c-yes, #c-q9 { margin-top: 0 !important; min-height: 0; max-height: 100%; overflow: auto; padding: 8px 14px; }
+    #r-sub2 .lik, #r-sub2 .yes { grid-template-columns: minmax(150px, 1.2fr) minmax(120px, 1.5fr) 120px; }
+    .lik, .yes { padding: 4px 0; font-size: 12.5px; } .lik .bar5, .yes .track { height: 16px; } .lik .pct, .yes .pct { font-size: 14px !important; }
+    .subtabs button { padding: 4px 8px; } .subtabs .st { font-size: 15px; } .subtabs .num { width: 20px; height: 20px; font-size: 11px; } .subtabs .sd { font-size: 11px; }
+    #r-sub1 .card .note, #r-sub2 .card .note { margin: 1px 0 4px; font-size: 11px; }
+    .rlegend { margin: 2px 0 2px; font-size: 10.5px; }
+    details { padding: 4px 14px; font-size: 11.5px; }
+    footer { margin-top: 0; padding-top: 4px; font-size: 10.5px; gap: 0; }
+  }
+  @media (min-width: 1100px) and (min-height: 680px) and (max-height: 899px) {
+    .top img { height: 46px; } .top h1 { font-size: 21px; } .top .sub { font-size: 11px; }
+    .take { padding: 5px 12px; font-size: 12.5px; }
+    .tile { padding: 4px 10px; } .tile .val { font-size: 21px; } .tile .lbl { font-size: 9.5px; } .tile .note { font-size: 10px; }
+    #v-cob .card { padding: 6px 12px; } #v-cob .card .note { font-size: 10.5px; margin: 0 0 2px; } .card h2 { font-size: 15px; }
+    #c-tabla td { padding: 3px 8px; font-size: 12px; } #c-tabla td .sm { font-size: 10.5px; }
+    #v-cob:not([hidden]) { grid-template-rows: auto minmax(0, 1fr) minmax(0, 0.55fr) minmax(0, 0.85fr); }
+  }
 </style>
 </head>
 <body>
@@ -199,19 +257,19 @@
   </section>
 
   <section class="grid2">
-    <div class="card">
+    <div class="card" id="c-campus">
       <h2>Cobertura por campus</h2>
       <p class="note">De menor a mayor. La línea punteada marca 30%. Clic en una barra para filtrar.</p>
       <div class="chart" id="ch-campus"></div>
     </div>
-    <div class="card">
+    <div class="card" id="c-grupo">
       <h2 id="h-grupo">Cobertura por facultad</h2>
       <p class="note">Al elegir una facultad se abre por carrera. Clic en una barra para filtrar.</p>
       <div class="chart" id="ch-grupo"></div>
     </div>
   </section>
 
-  <section class="card">
+  <section class="card" id="c-tabla">
     <h2>Cobertura por asignatura y campus</h2>
     <p class="note">Cada fila es una asignatura Ciclo. Cada celda muestra la cobertura del campus y, debajo, respondentes / inscritos. Celda vacía: la asignatura no se dicta en ese campus. Brecha: inscripciones sin respuesta.</p>
     <div class="tbar">
@@ -226,7 +284,7 @@
     </div>
   </section>
 
-  <section class="card">
+  <section class="card" id="c-evol">
     <h2>Evolución de la cobertura por corte</h2>
     <p class="note">Se agrega un punto con cada actualización del archivo de respuestas. Respeta los filtros.</p>
     <div class="chart" id="ch-evol"></div>
@@ -267,7 +325,7 @@
           <div class="note ref2" id="r-min-ref"></div>
         </div>
       </section>
-      <section class="card" style="margin-top:14px">
+      <section class="card" id="c-q5" style="margin-top:14px">
         <h2>Autoconcepto del estudiante</h2>
         <p class="note">Porcentaje de acuerdo ("De acuerdo" + "Muy de acuerdo") y distribución completa de respuestas, de mayor a menor acuerdo.</p>
         <div class="rlegend" id="leg1"></div>
@@ -275,13 +333,13 @@
       </section>
     </div>
     <div id="r-sub2" hidden>
-      <section class="card">
+      <section class="card" id="c-yes">
         <h2>Conocimiento de la evaluación de ciclo</h2>
         <p class="note">Porcentaje de estudiantes que responde "Sí". Quienes no fueron informados del objetivo no responden las preguntas siguientes (salto de la encuesta).</p>
         <div class="rlegend"><span class="mkl">Referencia corporativa</span></div>
         <div id="r-yes"></div>
       </section>
-      <section class="card" style="margin-top:14px">
+      <section class="card" id="c-q9" style="margin-top:14px">
         <h2>Valoración de la evaluación de ciclo</h2>
         <p class="note">"Asume un rol activo" incluye también a quienes no fueron informados del objetivo de la evaluación (pregunta Q10).</p>
         <div class="rlegend" id="leg2"></div>
@@ -366,7 +424,7 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
   function bars(box, data, onClick) {
     box.replaceChildren();
     if (!data.length) { box.innerHTML = '<div class="empty">Sin datos para esta selección</div>'; return; }
-    const W = Math.max(box.clientWidth, 280), rowH = 30, top = 6, bottom = 26;
+    const W = Math.max(box.clientWidth, 280), rowH = (innerWidth >= 1100 && innerHeight < 900) ? 22 : 30, top = 4, bottom = 22;
     const H = top + bottom + data.length * rowH;
     const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img' }, box);
     const probe = el('text', { class: 'lbl' }, svg);
@@ -444,7 +502,7 @@ const DATA = {"cobertura":[{"facultad":"Administración y Negocios","carrera":"I
     const rs = DATA.historial.filter((r) => keys.has(r.carrera + '|' + r.codigo + '|' + r.campus));
     const pts = [...groupBy(rs, (r) => r.corte)].map(([c, v]) => { const s = sum(v); return { c, t: new Date(c.replace(' ', 'T')).getTime(), v: pct(s.r, s.i), r: s.r, i: s.i }; }).sort((a, b) => a.t - b.t);
     if (!pts.length) { box.innerHTML = '<div class="empty">Sin datos para esta selección</div>'; return; }
-    const W = Math.max(box.clientWidth, 280), H = 230, m = { t: 16, r: 70, b: 30, l: 46 };
+    const W = Math.max(box.clientWidth, 280), H = box.clientHeight > 70 ? Math.min(box.clientHeight - 4, 300) : (innerWidth >= 1100 ? 110 : 230), m = { t: 12, r: 70, b: 24, l: 46 };
     const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img' }, box);
     let t0 = pts[0].t, t1 = pts[pts.length - 1].t; if (t0 === t1) { t0 -= 3 * 864e5; t1 += 3 * 864e5; }
     const max = Math.max(0.65, ...pts.map((p) => p.v));
