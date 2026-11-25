@@ -183,6 +183,7 @@
   .mtog button { all: unset; cursor: pointer; padding: 5px 12px; border: 1px solid var(--linea); border-radius: 999px; background: #fff; color: var(--ua-gris); font-weight: 600; }
   .mtog button[aria-selected=true] { background: var(--ua-gris); color: #fff; border-color: var(--ua-gris); }
   .mtog button:focus-visible { outline: 2px solid var(--ua-rojo); outline-offset: 2px; }
+  .parcial { grid-column: 1 / -1; font-size: 12px; color: #7A5600; background: #FBF4E4; border-left: 3px solid #C99A2E; padding: 7px 10px; }
   .hnote { font-size: 11.5px; color: var(--texto-suave); margin: 6px 2px 10px; }
   .ctab.ct td, .ctab.ct th { text-align: center; } .ctab.ct td:first-child, .ctab.ct th:first-child { text-align: left; }
   .ctab.ct td b { font-size: 16px; } .ctab.ct .rf { display: block; font-size: 11px; color: var(--texto-suave); }
@@ -471,8 +472,9 @@
     </div>
     <div id="r-sub2" hidden>
       <section class="rtiles" id="e-tiles">
+        <div class="parcial" id="e-parc" hidden><b>Síntesis parcial.</b> La valoración de la evaluación no alcanza <span class="minn">15</span> respuestas en esta selección; se muestran las preguntas que sí lo alcanzan.</div>
         <div class="tile main">
-          <div class="lbl">Valoración positiva de la evaluación <span class="info" tabindex="0" title="Promedio del porcentaje de estudiantes que responde «De acuerdo» o «Muy de acuerdo» en las 3 afirmaciones de valoración de la evaluación de ciclo. Dos de ellas las responden solo quienes fueron informados del objetivo; «Asume un rol activo» la responden todos (pregunta Q10 para los no informados).">i</span></div>
+          <div class="lbl"><span id="e-idx-l">Valoración positiva de la evaluación</span> <span class="info" tabindex="0" title="Promedio del porcentaje de estudiantes que responde «De acuerdo» o «Muy de acuerdo» en las 3 afirmaciones de valoración de la evaluación de ciclo. Dos de ellas las responden solo quienes fueron informados del objetivo; «Asume un rol activo» la responden todos (pregunta Q10 para los no informados).">i</span></div>
           <div class="val" id="e-idx">—</div>
           <div class="mbar"><i id="e-idx-bar"></i><span class="mk" id="e-idx-mk" hidden></span></div>
           <div class="note" id="e-idx-txt">—</div>
@@ -590,7 +592,7 @@
       <li><b>Respuestas válidas:</b> cada respuesta cuenta en la asignatura Ciclo en que el estudiante está inscrito y que declaró al responder. Un estudiante puede contar en dos asignaturas si respondió por cada una (<span id="m-dos">—</span> casos en este corte).</li>
       <li><b>Base unificada:</b> el reporte acumula todas las cargas de respuestas para no perder registros entre una descarga y otra; si un estudiante responde más de una vez por la misma asignatura, se conserva su respuesta más reciente. Este corte incluye <span id="m-resc">—</span> respuestas registradas en cargas anteriores que no vienen en la última descarga (rescatadas).</li>
       <li><b>Fuera del cálculo:</b> <span id="m-fuera">—</span> respuestas de estudiantes no inscritos en asignaturas del universo y <span id="m-int">—</span> de programas de intercambio (total de respuestas en el corte: <span id="m-arch">—</span>).</li>
-      <li><b>Resultados:</b> se calculan sobre las respuestas válidas de la base unificada. Indicador principal: porcentaje de acuerdo ("De acuerdo" + "Muy de acuerdo"). Para resguardar la confiabilidad y la confidencialidad, no se muestran resultados de selecciones con menos de <span class="minn">15</span> respuestas (ni de preguntas con menos de <span class="minn">15</span> respuestas propias). Con 15 respuestas, un porcentaje puede tener un margen de error de hasta ±25 puntos, por lo que las diferencias entre grupos pequeños deben leerse con cautela.</li>
+      <li><b>Resultados:</b> se calculan sobre las respuestas válidas de la base unificada. Indicador principal: porcentaje de acuerdo ("De acuerdo" + "Muy de acuerdo"). Para resguardar la confiabilidad y la confidencialidad, en «La evaluación de ciclo», si las afirmaciones de valoración no alcanzan el mínimo, las tarjetas muestran una <b>síntesis parcial</b> con las preguntas que sí lo alcanzan (estudiantes informados del objetivo y «Asume un rol activo»). En general, no se muestran resultados de selecciones con menos de <span class="minn">15</span> respuestas (ni de preguntas con menos de <span class="minn">15</span> respuestas propias). Con 15 respuestas, un porcentaje puede tener un margen de error de hasta ±25 puntos, por lo que las diferencias entre grupos pequeños deben leerse con cautela.</li>
       <li><b>Analítica:</b> el Índice de Autoconcepto (IA) promedia las 7 afirmaciones de autoconcepto y el Índice de Percepción de la Evaluación de Ciclo (IPC) las 3 afirmaciones de valoración, ambos en escala 0–100 (consistencia interna: α = <span id="m-a1">—</span> y α = <span id="m-a2">—</span>). Las preguntas de conocimiento de la evaluación (Sí/No) se informan aparte. El IPC solo se calcula para quienes declararon haber sido informados del objetivo de la evaluación, porque la encuesta salta las preguntas de valoración a quienes responden "No" (<span id="m-ipcp">—</span> de las respuestas tienen IPC); por eso su n es menor que el del IA y el índice puede sobrestimar la valoración del conjunto. Las diferencias entre ciclos se informan con su intervalo de confianza al 95%: se rotulan como "diferencia clara" solo si el intervalo no incluye el cero; si los ciclos comparados provienen de campus con composición distinta, se advierte que la diferencia puede deberse al campus. La comparación entre ciclos es transversal (estudiantes distintos en el mismo período) y puede estar influida por la permanencia: en ciclos avanzados solo están quienes continúan en la carrera. La comparación entre años estará disponible desde la aplicación 2027.</li>
       <li><b>Asignaturas por asignatura:</b> 17 equivalencias de código entre la base curricular y Banner están pendientes de validación; los resultados de esas asignaturas pueden ajustarse cuando se validen.</li>
       <li><b>Semáforo:</b> umbrales referenciales (bajo 30%, 30% a 59%, 60% o más); no corresponden a una meta institucional.</li>
@@ -814,11 +816,11 @@ const DATA = {"malla":[{"carrera":"Administración Pública","modalidad":"Diurno
     };
     const q5 = likRows($('r-q5'), RM.t1 || [], true);
     const de100 = (v) => Math.round(v * 100);
-    const setTile = (id, p, ref) => {
+    const setTile = (id, p, ref, inv) => {
       $(id + '-bar').style.width = (p * 100) + '%';
       const mk = $(id + '-mk'); mk.hidden = isCorp || !Number.isFinite(ref); if (!mk.hidden) mk.style.left = `calc(${ref * 100}% - 1px)`;
       const r = $(id + '-ref'); r.replaceChildren();
-      if (!isCorp && Number.isFinite(ref)) { const d = (p - ref) * 100; const a = document.createElement('span'); a.className = d >= 0.05 ? 'up' : d <= -0.05 ? 'dn' : ''; a.textContent = `${d >= 0 ? '+' : ''}${d.toFixed(1).replace('.', ',')} pp`; r.append(`Corporativo ${fp(ref)} (marca negra) · `, a); }
+      if (!isCorp && Number.isFinite(ref)) { const d = (p - ref) * 100; const a = document.createElement('span'); a.className = (inv ? -d : d) >= 0.05 ? 'up' : (inv ? -d : d) <= -0.05 ? 'dn' : ''; a.textContent = `${d >= 0 ? '+' : ''}${d.toFixed(1).replace('.', ',')} pp`; r.append(`Corporativo ${fp(ref)} (marca negra) · `, a); }
     };
     const txt = (el, parts) => { el.replaceChildren(); parts.forEach((x) => { if (Array.isArray(x)) { const b = document.createElement('b'); b.textContent = x[0]; el.appendChild(b); } else el.append(x); }); };
     if (q5.length) {
@@ -834,9 +836,11 @@ const DATA = {"malla":[{"carrera":"Administración Pública","modalidad":"Diurno
     }
     const q9 = likRows($('r-q9'), RM.t2l || [], false);
     { const tiles = ['e-idx', 'e-max', 'e-min'].map((x) => $(x).closest('.tile')); const all = q9.length === (RM.t2l || []).length && q9.length > 1;
-      tiles.forEach((t) => { t.hidden = !all; }); $('e-insuf').hidden = all;
-      if (!all) $('e-insuf').textContent = `Síntesis no disponible: las afirmaciones de valoración que responden solo los estudiantes informados del objetivo tienen menos de ${MINN} respuestas en esta selección.`;
-      else {
+      const q6 = R.q6, yes = q6 ? yesp(q6) : NaN, cyes = yesp(C.q6), parcial = !all && !!q6;
+      $('e-parc').hidden = !parcial; $('e-insuf').hidden = all || parcial; tiles.forEach((t) => { t.hidden = !(all || parcial); });
+      if (!all && !parcial) $('e-insuf').textContent = `Síntesis no disponible: las afirmaciones de valoración tienen menos de ${MINN} respuestas en esta selección.`;
+      else if (all) {
+        $('e-idx-l').textContent = 'Valoración positiva de la evaluación';
         const idx = q9.reduce((a, r) => a + r.p, 0) / q9.length;
         const cidx = (RM.t2l || []).map(([id]) => agree(C[id])).filter(Number.isFinite); const cref = cidx.reduce((a, b) => a + b, 0) / (cidx.length || 1);
         $('e-idx').textContent = fp(idx); setTile('e-idx', idx, cref);
@@ -846,6 +850,19 @@ const DATA = {"malla":[{"carrera":"Administración Pública","modalidad":"Diurno
         txt($('e-max-v'), ['La afirmación con más acuerdo: ', [`${de100(hi.p)} de cada 100`], ` estudiantes (${fp(hi.p)}).`]);
         $('e-min').textContent = lo.name; setTile('e-min', lo.p, lo.ref);
         txt($('e-min-v'), ['La afirmación con menos acuerdo: ', [`${de100(lo.p)} de cada 100`], ` estudiantes (${fp(lo.p)}); `, [`${de100(lo.v[3] / lo.v[0])} de cada 100`], ' se declara neutral.']);
+      } else {
+        $('e-idx-l').textContent = 'Informados del objetivo de la evaluación';
+        $('e-idx').textContent = fp(yes); setTile('e-idx', yes, cyes);
+        txt($('e-idx-txt'), [[`${de100(yes)} de cada 100`], ` estudiantes fue informado del objetivo de la evaluación de ciclo (${fi(q6[1])} de ${fi(q6[0])}).`]);
+        const maxT = tiles[1];
+        if (q9.length) {
+          const hi = q9.slice().sort((a, b) => b.p - a.p)[0]; maxT.hidden = false;
+          $('e-max').textContent = hi.name; setTile('e-max', hi.p, hi.ref);
+          txt($('e-max-v'), ['La afirmación de valoración con más acuerdo entre las disponibles: ', [`${de100(hi.p)} de cada 100`], ` estudiantes (${fi(hi.v[4] + hi.v[5])} de ${fi(hi.v[0])}).`]);
+        } else maxT.hidden = true;
+        const no = 1 - yes;
+        $('e-min').textContent = 'Estudiantes no informados del objetivo'; setTile('e-min', no, 1 - cyes, true);
+        txt($('e-min-v'), [[`${de100(no)} de cada 100`], ` estudiantes no fue informado del objetivo (${fi(q6[0] - q6[1])} de ${fi(q6[0])}); por eso la valoración de la evaluación no alcanza el mínimo de ${MINN} respuestas para mostrarse.`]);
       } }
     const yb = $('r-yes'); yb.replaceChildren();
     (RM.t2s || []).forEach(([id, name]) => {
