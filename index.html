@@ -130,12 +130,15 @@
   .info { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--texto-suave); color: var(--texto-suave); font-size: 10px; font-weight: 700; align-items: center; justify-content: center; cursor: help; margin-left: 4px; font-style: italic; font-family: Georgia, serif; text-transform: none; vertical-align: 1px; }
   .rtiles .tile .val { font-size: 34px; }
   .rtiles .tile .val.sm { font-size: 21px; }
-  .fpanel .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.7fr) auto auto; gap: 10px; align-items: end; }
+  .fpanel .filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-end; }
+  .fpanel .filters label { width: 220px; } .fpanel #lbl-asig { width: 340px; } .fpanel #reset { flex: none; }
+  .views #pdf { margin-left: auto; flex: none; display: inline-block; all: unset; box-sizing: border-box; cursor: pointer; margin-left: auto; font-size: 13px; font-weight: 600; background: #fff; color: var(--ua-rojo); border: 1px solid var(--ua-rojo); border-radius: var(--radio); padding: 8px 14px; box-shadow: none; transition: background .15s, color .15s; }
+  .views #pdf:hover { background: var(--ua-rojo); color: #fff; } .views #pdf:focus-visible { outline: 2px solid var(--ua-rojo); outline-offset: 2px; }
   .fpanel select { min-width: 0; width: 100%; }
   .fpanel label { min-width: 0; }
   .views button { min-width: 0; }
   @media (max-width: 700px) {
-    .fpanel .filters { grid-template-columns: 1fr; }
+    .fpanel .filters label, .fpanel #lbl-asig, .fpanel #reset { width: 100%; } .views { flex-wrap: wrap; row-gap: 10px !important; } .views #pdf { margin-left: 0 !important; width: 100%; text-align: center; }
     .views { gap: 8px; } .views button { padding: 10px; gap: 8px; } .views button[aria-selected=true] { padding: 9px; }
     .views svg { width: 22px; height: 22px; } .views .vt { font-size: 16px; } .nuevo { display: none; }
   }
@@ -292,8 +295,8 @@
     .top img { height: 54px; }
     .top h1 { font-size: 24px; } .top .sub { font-size: 11.5px; margin-top: 2px; }
     main.wrap { flex: 1; min-height: 0; overflow: auto; padding-top: 8px; padding-bottom: 4px; gap: 8px; display: flex; flex-direction: column; }
-    .stick { position: static; padding: 0; margin: 0; border: none; gap: 6px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr); align-items: stretch; }
-    .stick .views { flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; } .stick .vtitle { font-size: 24px; }
+    .stick { position: static; padding: 0; margin: 0; border: none; gap: 6px; display: flex; flex-direction: column; }
+    .stick .vtitle { font-size: 24px; } .gohome { height: 32px; }
     .views button { padding: 4px 12px; gap: 10px; } .views button[aria-selected=true] { padding: 3px 11px; }
     .views svg { width: 22px; height: 22px; } .views button > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .views .vt { font-size: 17px; } .views .vs { display: inline; margin: 0 0 0 8px; font-size: 11.5px; }
     .fpanel { padding: 6px 12px; } .fpanel .ft { margin-bottom: 3px; font-size: 12px; } .chips { margin-top: 4px; font-size: 11.5px; } .chip { padding: 2px 9px; font-size: 11.5px; }
@@ -370,7 +373,7 @@
   body.home-mode > .top, body.home-mode > main { display: none !important; }
   .gohome { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 14px; border: 1px solid var(--linea); border-radius: 10px; background: #fff; color: var(--ua-gris); text-decoration: none; font-size: 13px; font-weight: 600; transition: border-color .15s; }
   .gohome:hover { border-color: var(--ua-gris); } .gohome svg { width: 20px; height: 20px; stroke: var(--ua-gris); }
-  .views { display: flex !important; align-items: center; gap: 18px; } .views > button { display: none !important; }
+  .views { display: flex !important; align-items: center; gap: 18px; } .views > button:not(#pdf) { display: none !important; }
   .vtitle { margin: 0; font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 600; font-size: 26px; text-transform: uppercase; letter-spacing: 4px; color: var(--ua-gris); display: flex; align-items: baseline; gap: 10px; }
   .vtitle small { font-size: 13px; letter-spacing: .5px; text-transform: none; color: var(--texto-suave); font-weight: 500; }
   .gohome { height: 38px; box-sizing: border-box; }
@@ -408,6 +411,7 @@
   <nav class="views" role="tablist" aria-label="Secciones">
     <a class="gohome" href="#inicio" aria-label="Volver al inicio"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span>Inicio</span></a>
     <h2 class="vtitle" id="vtitle"></h2>
+    <button class="btn pdfbtn" id="pdf" type="button">Descargar PDF de esta vista</button>
     <button type="button" role="tab" data-view="cob" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg><span><span class="vt">Cobertura</span><span class="vs">¿Cuántos estudiantes respondieron?</span></span></button>
     <button type="button" role="tab" data-view="res" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 16v-4"/><path d="M11 16v-8"/><path d="M15 16v-6"/><path d="M19 16V6"/></svg><span><span class="vt">Resultados<span class="nuevo" id="nuevo" hidden>NUEVO</span></span><span class="vs">¿Qué opinan los estudiantes?</span></span></button>
     <button type="button" role="tab" data-view="ana" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><span><span class="vt">Analítica <span class="dev">(en desarrollo)</span></span><span class="vs">¿Cómo cambian las percepciones?</span></span></button>
@@ -421,7 +425,6 @@
     <label>Carrera <select id="f-carrera"></select></label>
     <label id="lbl-asig" hidden>Asignatura <select id="f-asig"></select></label>
     <button class="btn" id="reset" type="button">Quitar filtros</button>
-    <button class="btn pdfbtn" id="pdf" type="button">Descargar PDF de esta vista</button>
   </div>
     <div class="chips" id="chips"></div>
     <div class="print-sel" id="print-sel"></div>
