@@ -359,9 +359,9 @@
   .hcard { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 18px 12px 10px; text-decoration: none; color: var(--ua-gris); border-left: 1px solid #CFCBC8; }
   .hcard:first-child { border-left: none; }
   .ht { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 500; font-size: 34px; text-transform: uppercase; letter-spacing: 6px; line-height: 1; padding-left: 6px; transition: color .25s; }
-  .hl { display: block; width: 34px; height: 3px; background: var(--ua-rojo); margin-top: 16px; transition: width .3s ease; }
+  .hline { display: block; width: 34px; height: 3px; background: var(--ua-rojo); margin-top: 16px; transition: width .3s ease; }
   .hcard small { margin-top: 10px; font-size: 12px; color: var(--texto-suave); letter-spacing: .5px; }
-  .hcard:hover .hl, .hcard:focus-visible .hl { width: 110px; }
+  .hcard:hover .hline, .hcard:focus-visible .hline { width: 110px; }
   .hcard:hover .ht, .hcard:focus-visible .ht { color: var(--ua-rojo); }
   .hcard:focus-visible { outline: none; }
   .hfoot { margin: 44px 0 0; font-size: 12px; color: var(--texto-suave); text-align: center; }
@@ -396,9 +396,9 @@
     <p>Corte <b id="corte3">—</b></p>
   </div>
   <nav class="hgrid" aria-label="Secciones del reporte">
-    <a class="hcard" href="#cobertura"><span class="ht">Cobertura</span><span class="hl"></span></a>
-    <a class="hcard" href="#resultados"><span class="ht">Resultados</span><span class="hl"></span></a>
-    <a class="hcard" href="#analitica"><span class="ht">Analítica</span><span class="hl"></span><small>en desarrollo</small></a>
+    <a class="hcard" href="#cobertura"><span class="ht">Cobertura</span><span class="hline"></span></a>
+    <a class="hcard" href="#resultados"><span class="ht">Resultados</span><span class="hline"></span></a>
+    <a class="hcard" href="#analitica"><span class="ht">Analítica</span><span class="hline"></span><small>en desarrollo</small></a>
   </nav>
   <p class="hfoot">Dirección de Calidad de los Aprendizajes · Vicerrectoría Académica · <b>Universidad Autónoma de Chile</b></p>
 </section>
